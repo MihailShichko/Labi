@@ -3,11 +3,11 @@
 
 struct Child
 {
-
+    int a;
 };
 
 int main()
 {
-        
+    return 0;
 }
 
