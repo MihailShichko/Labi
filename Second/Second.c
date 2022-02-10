@@ -1,14 +1,14 @@
 ﻿
 #include "stdio.h";
 
-int aye() {
-	return 18;
+int jopa() {
+	return 20;
 }
 
 int main()
 {
 	printf("ti pidor123");
-	printf("%d", aye());
+	printf("%d", jopa());
 }
 
 
