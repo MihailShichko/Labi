@@ -3,7 +3,7 @@
 
 int main()
 {
-	printf("ti pidor");
+	printf("ti pidor123");
 }
 
 
