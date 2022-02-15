@@ -1,9 +1,10 @@
 ﻿#include "stdbool.h";
 #include "stdio.h";
+#include "stdlib.h";
 
 struct Child
 {
-	union
+	union aye
 	{
 		char* lastSickness;
 		char* lastDoctorName;
@@ -13,34 +14,44 @@ struct Child
 		char* hospitalAdress;
 		char* currentDoctorSurname;
 	};
+
+	union aye Ls; //it
+
+	union aye 
 };
 
 struct Child childBuilder() 
 {
 	struct Child child;
 	printf("Imput last sickness: ");
+	child.lastSickness = malloc(10);
 	while(!gets(child.lastSickness)) printf("\nErorr...\n");
 
 	printf("Imput last doctor name: ");
+	child.lastDoctorName = malloc(10);
 	while(!gets(child.lastDoctorName)) printf("\nErorr...\n");
 
 	printf("Imput last doctor surname: ");
+	child.lastDoctorSurname = malloc(10);
 	while(!gets(child.lastDoctorSurname)) printf("\nErorr...\n");
 
 	printf("Is child ill at the moment(y/n)?: ");
-	char isSick;
-	while(isSick = getchar() != ('y' || 'n')) printf("\nErorr...\n");
-
-	child.isSick = (isSick == 'y');
+	char sick;
+	while((sick = getchar()) != 'y' && (sick != 'n')) printf("\nErorr...\n");
+	
+	child.isSick = (sick == 'y');
 	if (child.isSick)
 	{
 		printf("Imput hospital number: ");
+		child.hospitalNum = malloc(10);
 		while(!gets(child.hospitalNum)) printf("\nErorr...\n");
 
 		printf("Imput hospital adress: ");
+		child.hospitalAdress = malloc(10);
 		while(!gets(child.hospitalAdress)) printf("\nErorr...\n");
 
 		printf("Imput current doctor surname: ");
+		child.currentDoctorSurname = malloc(10);
 		while(!gets(child.currentDoctorSurname)) printf("\nErorr...\n");
 
 	}
@@ -50,14 +61,8 @@ struct Child childBuilder()
 
 int main()
 {
-	printf("ti pidor123");
 	struct Child child = childBuilder();
-	printf("%s", child.currentDoctorSurname);
-	printf("%s", child.lastDoctorName);
-	printf("%s", child.lastDoctorSurname);
-	printf("%s", child.hospitalNum);
-	printf("%s", child.hospitalAdress);
-	printf("%s", child.currentDoctorSurname);
+	
 }
 
 
