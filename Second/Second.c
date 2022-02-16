@@ -4,7 +4,7 @@
 
 struct Child
 {
-	union aye
+	union Inf
 	{
 		char* lastSickness;
 		char* lastDoctorName;
@@ -15,44 +15,56 @@ struct Child
 		char* currentDoctorSurname;
 	};
 
-	union aye Ls; //it
+	union Inf LS;
 
-	union aye 
+	union Inf LDN;
+
+	union Inf LDS;
+
+	union Inf HN;
+
+	union Inf HA;
+
+	union Inf CDS;
+
 };
 
 struct Child childBuilder() 
 {
 	struct Child child;
 	printf("Imput last sickness: ");
-	child.lastSickness = malloc(10);
-	while(!gets(child.lastSickness)) printf("\nErorr...\n");
+	child.LS.lastSickness = malloc(sizeof(union Inf));
+	while(!gets(child.LS.lastSickness)) printf("\nErorr... Try again\n");
 
 	printf("Imput last doctor name: ");
-	child.lastDoctorName = malloc(10);
-	while(!gets(child.lastDoctorName)) printf("\nErorr...\n");
+	child.LDN.lastDoctorName = malloc(sizeof(union Inf));
+	while(!gets(child.LDN.lastDoctorName)) printf("\nErorr... Try again\n");
 
 	printf("Imput last doctor surname: ");
-	child.lastDoctorSurname = malloc(10);
-	while(!gets(child.lastDoctorSurname)) printf("\nErorr...\n");
+	child.LDS.lastDoctorSurname = malloc(sizeof(union Inf));
+	while(!gets(child.LDS.lastDoctorSurname)) printf("\nErorr... Try again\n");
 
 	printf("Is child ill at the moment(y/n)?: ");
 	char sick;
-	while((sick = getchar()) != 'y' && (sick != 'n')) printf("\nErorr...\n");
+	while((sick = getchar()) != 'y' && (sick != 'n')) printf("\nErorr... Try again\n");
 	
 	child.isSick = (sick == 'y');
 	if (child.isSick)
 	{
+		child.HN.hospitalNum = malloc(sizeof(union Inf));
+		while(!gets(child.HN.hospitalNum)) printf("\nErorr... Try again\n");
+
 		printf("Imput hospital number: ");
-		child.hospitalNum = malloc(10);
-		while(!gets(child.hospitalNum)) printf("\nErorr...\n");
+		child.HN.hospitalNum = malloc(sizeof(union Inf));
+		while(!gets(child.HN.hospitalNum)) printf("\nErorr... Try again\n");
 
 		printf("Imput hospital adress: ");
-		child.hospitalAdress = malloc(10);
-		while(!gets(child.hospitalAdress)) printf("\nErorr...\n");
+		child.HA.hospitalAdress = malloc(sizeof(union Inf));
+		while(!gets(child.HA.hospitalAdress)) printf("\nErorr... Try again\n");
 
 		printf("Imput current doctor surname: ");
-		child.currentDoctorSurname = malloc(10);
-		while(!gets(child.currentDoctorSurname)) printf("\nErorr...\n");
+		child.CDS.currentDoctorSurname = malloc(sizeof(union Inf));
+		while(!gets(child.CDS.currentDoctorSurname)) printf("\nErorr... Try again\n");
 
 	}
 	return child;
@@ -62,7 +74,14 @@ struct Child childBuilder()
 int main()
 {
 	struct Child child = childBuilder();
-	
+	printf("\n%s", child.LS);
+	printf("\n%s", child.LDN);
+	printf("\n%s", child.LDS);
+	if (child.isSick) {
+		printf("\n%s", child.HN);
+		printf("\n%s", child.HA);
+		printf("\n%s", child.CDS);
+	}
 }
 
 
