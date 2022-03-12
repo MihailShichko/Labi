@@ -36,7 +36,7 @@ struct Child
 	union Type
 	{
 		struct SickChild sickChild;
-		
+
 		struct HealthyChild healthyChild;
 
 	};
@@ -51,7 +51,7 @@ char* getstr(char* st)
 	return st;
 }
 
-char* getName(char str[]) 
+char* getName(char str[])
 {
 	while (true)
 	{
@@ -100,21 +100,21 @@ struct Child InputSick(struct Child* child)
 	while (!getName(child->sickChild.currentDoctorSurname)) printf("\nErorr... Try again\n");
 }
 
-struct Child* childBuilder() 
+struct Child* childBuilder()
 {
-	struct Child *child;
+	struct Child* child;
 	child = malloc(sizeof(struct Child));
 	printf("Input childs surname: ");
 	child->childSurname = malloc(sizeof(char));
-	while(!getName(child->childSurname)) printf("\nErorr... Try again\n");
+	while (!getName(child->childSurname)) printf("\nErorr... Try again\n");
 
 	char sick;
-	while (true) 
+	while (true)
 	{
 		printf("Is child ill at the moment(y/n)?: ");
 		sick = getchar();
 		getchar();
-		if (sick != 'y' && sick != 'n') 
+		if (sick != 'y' && sick != 'n')
 		{
 			printf("\nError try again...\n");
 		}
@@ -133,7 +133,7 @@ struct Child* childBuilder()
 	{
 		InputHealthy(child);
 	}
-	
+
 	return child;
 
 }
@@ -175,20 +175,37 @@ void outputChildrenByCondition(struct Child children[], char sickness[], int num
 			}
 		}
 	}
-	
+
 }
 
 int main(int argc, char* argv[])
 {
 	int num;
 	printf("Num: \n");
-	while(!scanf_s("%d", &num)) printf("\nYou have to input int\n");
-	struct Child *children = malloc(num * sizeof(struct Child));
+	int check = 0;
+	do
+	{
+		check = scanf_s("%d", &num);
+		if (check != 1)  printf("You have to input int > 0\n");
+		rewind(stdin);
+	} while (check != 1 || num < 1);
+
+	struct Child* children = malloc(num * sizeof(struct Child));
 	for (int i = 0; i < num; i++)
 	{
 		printf("#%d\n", i + 1);
 		children[i] = *childBuilder();
 	}
+
+	outputChildrenByCondition(children, argv[1], num);
 	
-	outputChildrenByCondition(children, argv[1], num);	
+	for(int i = 0; i < num; i++)
+	{
+		free(children[i].childSurname);
+		if(!children[i].isSick)
+		{
+			free(children[i].healthyChild.lastDoctorName);
+			free(children[i].healthyChild.lastSickness);
+		}
+	}
 }
