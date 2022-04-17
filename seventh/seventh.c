@@ -59,6 +59,35 @@ void InputChanges(FILE* inventory, FILE* help)
 	} while (!feof(help));
 }
 
+void CountDelta(FILE* help)
+{
+	rewind(help);
+	fpos_t Pos;
+	struct Element temp1;
+	struct Element temp2;
+	do 
+	{
+		fread(&temp1, sizeof(struct Element), 1, help);
+		fgetpos(help, &Pos);
+		do 
+		{
+			fread(&temp2, sizeof(struct Element), 1, help);
+			if (strcmp(temp1.Name, temp2.Name) == 0) 
+			{
+				temp1.amount += temp2.amount;
+				fgetpos(help, &Pos);
+			}
+
+			
+			
+		} while (!feof(help));
+		
+		printf("Chainges in %s - %d", temp1.Name, temp1.amount);
+		if (feof(help)) break;
+		fsetpos(help, &Pos);
+	} while (!feof(help));
+}
+
 void WriteIntoFile(FILE* f) 
 {
 	struct Element* elem;
@@ -98,6 +127,9 @@ int main()
 	InputChanges(inventory, help);
 	puts("After changes:");
 	print(inventory);
+	puts("Delta:");
+	CountDelta(help);
 	fclose(help);
 	fclose(inventory);
+
 }
